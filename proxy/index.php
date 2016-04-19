@@ -24,12 +24,14 @@ if(!file_exists($fileName) || time() - filectime($fileName) > $cacheLength) {
     curl_setopt($curl, CURLOPT_URL, $fileMap[$requestedFile]);
     curl_setopt($curl, CURLOPT_HEADER, 0);
     curl_setopt($curl, CURLOPT_FILE, $cache);
-    curl_setopt($curl, CURLOPT_CAINFO, __DIR__.'/cacert.pem');
+    // curl_setopt($curl, CURLOPT_CAINFO, __DIR__ . '/cacert.pem');
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
     $result = curl_exec($curl);
 
     if($result == false) {
         echo curl_error($curl);
+        unlink($fileName);
         die();
     }
 
