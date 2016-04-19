@@ -1,7 +1,5 @@
 <?php
 
-require 'vendor/autoload.php';
-
 $fileMap = array(
     // pkar
     '1WGKorzvde8Bxg-Nm9z0NbBTMfp7QKx2rh7FDbhNajjA' => 'https://docs.google.com/spreadsheets/d/1WGKorzvde8Bxg-Nm9z0NbBTMfp7QKx2rh7FDbhNajjA/gviz/tq?tqx=out:csv',
@@ -28,7 +26,12 @@ if(!file_exists($fileName) || time() - filectime($fileName) > $cacheLength) {
     curl_setopt($curl, CURLOPT_FILE, $cache);
     curl_setopt($curl, CURLOPT_CAINFO, __DIR__.'/cacert.pem');
 
-    curl_exec($curl);
+    $result = curl_exec($curl);
+
+    if($result == false) {
+        echo curl_error($curl);
+        die();
+    }
 
     curl_close($curl);
     fclose($cache);
