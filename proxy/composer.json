@@ -1,0 +1,15 @@
+{
+  "name": "vividin/corst-proxy",
+  "description": "simple cors proxy",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Atte Pulkkinen",
+      "email": "me@attepulkkinen.fi"
+    }
+  ],
+  "require": {
+    "guzzlehttp/guzzle": "^6.2"
+  }
+}
