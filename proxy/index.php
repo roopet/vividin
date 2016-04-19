@@ -2,7 +2,6 @@
 
 require 'vendor/autoload.php';
 
-
 $fileMap = array(
     // pkar
     '1WGKorzvde8Bxg-Nm9z0NbBTMfp7QKx2rh7FDbhNajjA' => 'https://docs.google.com/spreadsheets/d/1WGKorzvde8Bxg-Nm9z0NbBTMfp7QKx2rh7FDbhNajjA/gviz/tq?tqx=out:csv',
@@ -17,14 +16,22 @@ if(!isset($fileMap[$requestedFile])) {
 }
 
 $fileName = __DIR__ . '/cache/' . $requestedFile . '.cache';
-$cacheLength = 60 * 60;
+$cacheLength = 60 * 60; // 1h
 
 if(!file_exists($fileName) || time() - filectime($fileName) > $cacheLength) {
-    $client = new GuzzleHttp\Client([
-        'verify' => __DIR__ . '/cacert.pem'
-    ]);
-    $response = $client->request('GET', $fileMap[$requestedFile]);
-    file_put_contents($fileName, $response->getBody());
+
+    $cache = fopen($fileName, 'w');
+    $curl = curl_init();
+
+    curl_setopt($curl, CURLOPT_URL, $fileMap[$requestedFile]);
+    curl_setopt($curl, CURLOPT_HEADER, 0);
+    curl_setopt($curl, CURLOPT_FILE, $cache);
+    curl_setopt($curl, CURLOPT_CAINFO, __DIR__.'/cacert.pem');
+
+    curl_exec($curl);
+
+    curl_close($curl);
+    fclose($cache);
 }
 
 header('Content-Type: text/csv; charset=utf-8');
