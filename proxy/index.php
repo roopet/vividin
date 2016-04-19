@@ -3,7 +3,7 @@
 require 'vendor/autoload.php';
 
 
-$fileMap = array()
+$fileMap = array(
     // pkar
     '1WGKorzvde8Bxg-Nm9z0NbBTMfp7QKx2rh7FDbhNajjA' => 'https://docs.google.com/spreadsheets/d/1WGKorzvde8Bxg-Nm9z0NbBTMfp7QKx2rh7FDbhNajjA/gviz/tq?tqx=out:csv',
     '1ivCFmtnag_nJ4Vur5526xukFT656oy31FFSOD2k6RTY' => 'https://docs.google.com/spreadsheets/d/1ivCFmtnag_nJ4Vur5526xukFT656oy31FFSOD2k6RTY/gviz/tq?tqx=out:csv',
